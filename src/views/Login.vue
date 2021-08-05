@@ -73,8 +73,11 @@ export default {
               const tokenStr = resp.obj.tokenHead+resp.obj.token;
               //将tokenStr存入sessionStorage
               window.sessionStorage.setItem('tokenStr', tokenStr);
+              //页面跳转（首页）。先拿到重定向路径，因为有些访问是重定向过来的
+              let path = this.$route.query.redirect;
               //replace是替换页面，不能通过浏览器的后退按钮后退页面，push可以
-              this.$router.replace('/home');
+              //路径为'/'或者undefined就跳转到首页，否则跳转到之前输入的页面
+              this.$router.replace((path=='/'||path==undefined)?'/home':path);
             }
           })
         } else {

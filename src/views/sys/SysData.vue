@@ -1,12 +1,12 @@
 <template>
   <div>
-    Test1
+    备份恢复数据库
   </div>
 </template>
 
 <script>
 export default {
-  name: "Test1"
+  name: "SysData"
 }
 </script>
 

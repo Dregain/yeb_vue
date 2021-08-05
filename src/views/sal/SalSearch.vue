@@ -1,12 +1,12 @@
 <template>
   <div>
-    Test2
+    工资表查询
   </div>
 </template>
 
 <script>
 export default {
-  name: "Test2"
+  name: "SalSearch"
 }
 </script>
 
