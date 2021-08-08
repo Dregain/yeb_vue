@@ -6,7 +6,7 @@
           云E办
         </div>
         <el-dropdown class="userInfo" @command="commandHandler">
-          <span class="el-dropdown-link">
+          <span style="color: white" class="el-dropdown-link">
             {{user.name}}<i><img :src="user.userFace"></i>
           </span>
           <el-dropdown-menu slot="dropdown">

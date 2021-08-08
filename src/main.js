@@ -12,7 +12,7 @@ import {getRequest} from "@/utils/api";
 import {deleteRequest} from "@/utils/api";
 import {initMenu} from "@/utils/menus";
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, {size:'small'}); //全局样式size:'small'
 Vue.config.productionTip = false
 
 //插件形式使用请求

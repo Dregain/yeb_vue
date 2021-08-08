@@ -43,7 +43,7 @@ export const formatRoutes = (routes) => {
             component(resolve) {
                 //因为对应的组件在不同的目录下面，所以要逐个判断
                 if (component.startsWith('Home')) {
-                    require(['../views/' + component + '.vue'], resolve);
+                    require(['../views/'+component+'.vue'], resolve);
                 } else if (component.startsWith('Emp')) {
                     require(['../views/emp/'+component+'.vue'],resolve);
                 } else if (component.startsWith('Per')) {
@@ -55,10 +55,9 @@ export const formatRoutes = (routes) => {
                 } else if (component.startsWith('Sys')) {
                     require(['../views/sys/'+component+'.vue'],resolve);
                 }
-
             }
         }
-        fmtRoutes.push(fmtRouter);
+        fmtRoutes.push(fmtRouter)
     });
     return fmtRoutes;
 }

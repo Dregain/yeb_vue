@@ -5,7 +5,7 @@
           size="small"
           class="addPosInput"
           placeholder="添加职位..."
-          suffix-icon="el-icon-plus"
+          prefix-icon="el-icon-plus"
           @keydown.enter.native="addPosition"
           v-model="pos.name">
       </el-input>
@@ -16,6 +16,7 @@
           size="small"
           stripe border
           :data="positions"
+          @selection-change="handleSelectionChange"
           style="width: 70%">
         <el-table-column
             type="selection"
@@ -39,19 +40,21 @@
         <el-table-column
             label="操作">
           <template slot-scope="scope">
-            <!--scope就是范围，$index表示这一行的索引，scope.row就是这一行的JSON数据-->
+            <!--scope就是范围，scope.row就是这一行的JSON数据-->
             <el-button
                 size="mini"
-                @click="showEditView(scope.$index, scope.row)">编辑</el-button>
+                @click="showEditView(scope.row)">编辑</el-button>
             <el-button
                 size="mini"
                 type="danger"
-                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <el-button size='small' style="margin-top: 8px" type="danger" disabled>批量删除</el-button>
+    <el-button size='small' style="margin-top: 8px" type="danger"
+               :disabled="this.multipleSelection.length==0" @click="multDelete">批量删除
+    </el-button>
     <el-dialog
         title="编辑职位"
         :visible.sync="dialogVisible"
@@ -80,7 +83,8 @@ export default {
       dialogVisible: false,
       updatePos: {
         name: ''
-      }
+      },
+      multipleSelection: [],
     }
   },
   mounted() {
@@ -115,14 +119,14 @@ export default {
         }
       })
     },
-    showEditView(index,data) {
+    showEditView(data) {
       //直接赋值this.updatePos = data会有问题，界面的职位信息会跟着对话框变化，且对话框内容修改后点取消，界面上的数据不会还原，所以这里用数据的拷贝
       Object.assign(this.updatePos,data);
       //data中的数据都会传到this.updatePos中，创建日期传进去的时候可能会出一点bug
       this.updatePos.createDate = '';
       this.dialogVisible = true;
     },
-    handleDelete(index,data) {
+    handleDelete(data) {
       this.$confirm('此操作将永久删除['+data.name+']职位, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -140,6 +144,32 @@ export default {
         });
       });
     },
+    //多选框事件
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    multDelete() {
+      this.$confirm('此操作将永久删除['+this.multipleSelection.length+']条职位, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let ids = '?'; //传参一般是在地址后面加一个问号
+        this.multipleSelection.forEach(item=>{
+          ids+='ids='+item.id+'&';
+        });
+        this.deleteRequest('/system/basic/pos/'+ids).then(resp=>{
+          if (resp) {
+            this.initPositions();
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    }
   }
 }
 </script>
