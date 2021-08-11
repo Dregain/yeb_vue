@@ -41,9 +41,9 @@
         </div>
       </div>
     </div>
-    <transition name="slide-fade">
+    <el-collapse-transition>
       <div v-show="showAdvanceSearchVisible"
-           style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 5px;margin: 10px 0px">
+           style="border: 1px solid #409eff;border-radius: 5px;box-sizing: border-box;padding: 10px;margin: 10px 0px">
         <el-row>
           <el-col :span="5">
             政治面貌:
@@ -137,7 +137,7 @@
           </el-col>
         </el-row>
       </div>
-    </transition>
+    </el-collapse-transition>
     <div style="margin-top: 10px">
       <el-table
           :data="emps"
@@ -761,7 +761,7 @@ export default {
       this.visible2 = !this.visible2;
     },
     handleNodeClick(data) {
-      this.inputDepName = data.name
+      this.inputDepName = data.name;
       this.emp.departmentId = data.id;
       this.visible = !this.visible;
     },
