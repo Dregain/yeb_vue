@@ -13,6 +13,11 @@ proxyObj['/']={  //所有'/'都要去代理
     }
 }
 
+proxyObj['/ws'] = {
+    ws: true,
+    target: 'ws://localhost:8081'
+}
+
 module.exports={
     devServer:{
         host:'localhost',

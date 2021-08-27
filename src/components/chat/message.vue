@@ -1,12 +1,12 @@
 <template>
-  <div id="message" v-scroll-bottom="session">
-  	<ul v-if="currentSessionId==item.id" v-for="item in sessions">
-  		<li v-for="entry in item.messages">
+  <div id="message" v-scroll-bottom="sessions">
+  	<ul v-if="currentSession">
+  		<li v-for="entry in sessions[user.username+'#'+currentSession.username]">
   			<p class="time">
   				<span>{{entry.date | time}}</span>
   			</p>
   			<div class="main" :class="{self:entry.self}">
-  				<img class="avatar" :src="entry.self ? img : item.user.img" alt="">
+  				<img class="avatar" :src="entry.self ? user.userFace : currentSession.userFace" alt="">
   				<p class="text">{{entry.content}}</p>
   			</div>
   		</li>
@@ -21,12 +21,12 @@ export default {
   name: 'message',
   data () {
     return {
-      img: '../src/assets/images/1.jpg'
+      user:JSON.parse(window.sessionStorage.getItem('user')),
     }
   },
   computed:mapState([
   	'sessions',
-  	'currentSessionId'
+  	'currentSession'
   ]),
   filters:{
   	time (date) {
@@ -55,6 +55,7 @@ export default {
   overflow-y: scroll;
   ul {
   	list-style-type: none;
+    padding: 0px;
   	li {
   		margin-bottom: 15px;
   	}

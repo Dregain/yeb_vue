@@ -14,6 +14,8 @@
     "js-file-download": "^0.4.12",
     "node-sass": "^4.14.1",
     "sass-loader": "^9.0.0",
+    "sockjs-client": "^1.5.1",
+    "stompjs": "^2.3.3",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.6.2"
